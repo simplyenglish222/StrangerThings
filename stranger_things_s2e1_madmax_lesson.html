@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stranger Things 2 — Episode 1: MADMAX</title>
+<style>
+:root{
+  --bg:#071018;
+  --panel:#101d27;
+  --panel2:#162833;
+  --ink:#f7f1df;
+  --muted:#b8c4c9;
+  --accent:#e84d4d;
+  --accent2:#f4b942;
+  --good:#66d48f;
+  --bad:#ff7b7b;
+  --line:#29404d;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(232,77,77,.12), transparent 28%),
+    radial-gradient(circle at 85% 10%, rgba(244,185,66,.08), transparent 24%),
+    var(--bg);
+  color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.55;
+}
+header{
+  min-height:78vh;
+  padding:48px 20px 32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+header::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    linear-gradient(to bottom, transparent 65%, var(--bg)),
+    repeating-linear-gradient(90deg, transparent 0 44px, rgba(255,255,255,.018) 44px 45px);
+  pointer-events:none;
+}
+.hero{max-width:920px; position:relative; z-index:2}
+.kicker{letter-spacing:.24em;text-transform:uppercase;color:var(--accent2);font-weight:800}
+h1{font-size:clamp(3rem,9vw,7rem);margin:.1em 0 .05em;letter-spacing:.06em;text-shadow:0 0 28px rgba(232,77,77,.4)}
+.subtitle{font-size:clamp(1.1rem,2.4vw,1.55rem);color:var(--muted);max-width:760px;margin:0 auto}
+.hero-art{
+  margin:32px auto 10px;
+  max-width:760px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.scene{
+  min-height:165px;border:1px solid var(--line);border-radius:20px;
+  background:linear-gradient(145deg,#142633,#09131b);
+  padding:20px;display:flex;flex-direction:column;justify-content:center;
+  box-shadow:0 16px 40px rgba(0,0,0,.3)
+}
+.scene .icon{font-size:3.5rem}
+.scene b{margin-top:8px}
+nav{
+  position:sticky;top:0;z-index:20;
+  display:flex;gap:8px;overflow:auto;padding:10px 14px;
+  background:rgba(7,16,24,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)
+}
+nav a{color:var(--ink);text-decoration:none;white-space:nowrap;padding:8px 12px;border-radius:999px;background:#10212c;font-size:.9rem}
+nav a:hover{background:var(--accent)}
+main{width:min(1060px,calc(100% - 28px));margin:auto;padding:28px 0 80px}
+section{
+  background:linear-gradient(180deg,rgba(16,29,39,.98),rgba(10,21,29,.98));
+  border:1px solid var(--line);border-radius:24px;padding:clamp(20px,4vw,38px);margin:24px 0;
+  box-shadow:0 18px 45px rgba(0,0,0,.22)
+}
+h2{font-size:clamp(1.8rem,4vw,2.5rem);margin-top:0}
+h3{color:var(--accent2);margin-top:28px}
+.badge{display:inline-block;background:var(--accent);padding:5px 10px;border-radius:999px;font-weight:800;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+.time{float:right;color:var(--muted);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{
+  border:1px solid var(--line);background:var(--panel2);border-radius:17px;padding:16px;
+}
+.vocab{
+  cursor:pointer;transition:.18s transform,.18s border-color;min-height:150px
+}
+.vocab:hover{transform:translateY(-3px);border-color:var(--accent2)}
+.word{font-size:1.15rem;font-weight:800;color:var(--accent2)}
+.ru{display:none;color:#dfe9ed;margin-top:8px}
+.example{color:var(--muted);font-size:.93rem;margin-top:7px}
+button{
+  border:0;border-radius:12px;background:var(--accent);color:white;padding:10px 15px;
+  font-weight:800;cursor:pointer;font-size:.95rem
+}
+button.secondary{background:#29485a}
+button.good{background:#257747}
+button:hover{filter:brightness(1.08)}
+.question{
+  border:1px solid var(--line);border-radius:16px;padding:16px;margin:13px 0;background:#0d1b24
+}
+.options{display:grid;gap:8px;margin-top:11px}
+.option{
+  text-align:left;background:#19303e;border:1px solid transparent;
+}
+.option.correct{background:#1f7043}
+.option.wrong{background:#8a3333}
+.feedback{min-height:24px;margin-top:8px;font-weight:700}
+.fill{
+  width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);
+  background:#07141d;color:var(--ink);font-size:1rem
+}
+.drop{
+  min-height:50px;border:2px dashed #486271;border-radius:12px;padding:10px;margin:8px 0;
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.chip{background:#244356;padding:8px 12px;border-radius:999px;cursor:grab;user-select:none}
+.story{
+  font-family:Georgia,serif;font-size:1.08rem;background:#f2ead6;color:#1b252c;
+  border-radius:16px;padding:24px;line-height:1.75
+}
+.story .clickword{border-bottom:1px dotted #7d2a2a;cursor:pointer}
+.prompt{
+  border-left:5px solid var(--accent2);padding:12px 16px;background:#142630;border-radius:0 12px 12px 0
+}
+.speaking{
+  background:linear-gradient(135deg,#4a1f28,#182a36);border:1px solid #7d3946;
+  border-radius:18px;padding:20px
+}
+.timer{font-size:2.5rem;font-weight:900;text-align:center;margin:12px}
+.progress-wrap{height:14px;background:#09151d;border-radius:999px;overflow:hidden;margin:16px 0}
+.progress{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.25s}
+.small{font-size:.9rem;color:var(--muted)}
+.hidden{display:none}
+.match-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:9px 0}
+footer{text-align:center;color:var(--muted);padding:30px}
+@media(max-width:760px){
+  .grid,.cards{grid-template-columns:1fr}
+  .hero-art{grid-template-columns:1fr}
+  header{min-height:auto;padding-top:70px}
+  .time{float:none;display:block;margin-top:4px}
+  .match-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hero">
+    <div class="kicker">Interactive English lesson</div>
+    <h1>MADMAX</h1>
+    <p class="subtitle">Stranger Things 2, Episode 1. A one-hour lesson about mysterious visions, a new arcade champion, damaged pumpkins, and predictions about what may happen next.</p>
+    <div class="hero-art">
+      <div class="scene"><div class="icon">🕹️</div><b>The arcade</b><span class="small">A mysterious player breaks the record.</span></div>
+      <div class="scene"><div class="icon">🌩️</div><b>Will's vision</b><span class="small">The sky changes and danger appears.</span></div>
+      <div class="scene"><div class="icon">🎃</div><b>Rotten fields</b><span class="small">Hopper investigates an unusual problem.</span></div>
+    </div>
+  </div>
+</header>
+
+<nav>
+<a href="#warmup">Warm-up</a><a href="#vocab">Vocabulary</a><a href="#story">Story</a>
+<a href="#quiz">Quiz</a><a href="#grammar">Predictions</a><a href="#speaking">Speaking</a><a href="#final">Final mission</a>
+</nav>
+
+<main>
+<section id="warmup">
+  <span class="badge">Stage 1</span><span class="time">5 minutes</span>
+  <h2>Before watching: mystery board</h2>
+  <p>Discuss the clues. Make one prediction for each picture.</p>
+  <div class="grid">
+    <div class="prompt"><b>🕹️ A new player at the arcade</b><br>I think the new player is…</div>
+    <div class="prompt"><b>🌩️ A red storm above Hawkins</b><br>It is likely that the storm…</div>
+    <div class="prompt"><b>🎃 Dead pumpkins</b><br>The pumpkins may…</div>
+    <div class="prompt"><b>🚪 A secret cabin</b><br>Someone might be hiding…</div>
+  </div>
+  <h3>Quick choice</h3>
+  <div class="question" data-answer="2">
+    <b>Which clue seems the most dangerous?</b>
+    <div class="options">
+      <button class="option">The arcade record</button>
+      <button class="option">The Halloween costumes</button>
+      <button class="option">The enormous creature in Will's vision</button>
+    </div><div class="feedback"></div>
+  </div>
+</section>
+
+<section id="vocab">
+  <span class="badge">Stage 2</span><span class="time">10 minutes</span>
+  <h2>Essential words and collocations</h2>
+  <p>Click a card to reveal the Russian meaning. Press 🔊 to hear the English expression.</p>
+  <div class="cards">
+    <div class="card vocab" data-speech="break a record"><div class="word">break a record 🔊</div><div class="ru">побить рекорд</div><div class="example">Someone broke Dustin's arcade record.</div></div>
+    <div class="card vocab" data-speech="a mysterious player"><div class="word">a mysterious player 🔊</div><div class="ru">таинственный игрок</div><div class="example">The boys want to discover the player's identity.</div></div>
+    <div class="card vocab" data-speech="have a vision"><div class="word">have a vision 🔊</div><div class="ru">увидеть видение</div><div class="example">Will has a frightening vision.</div></div>
+    <div class="card vocab" data-speech="lose consciousness"><div class="word">lose consciousness 🔊</div><div class="ru">потерять сознание</div><div class="example">A person may fall and stop responding.</div></div>
+    <div class="card vocab" data-speech="investigate a case"><div class="word">investigate a case 🔊</div><div class="ru">расследовать дело</div><div class="example">Hopper investigates the damaged fields.</div></div>
+    <div class="card vocab" data-speech="rot from the inside"><div class="word">rot from the inside 🔊</div><div class="ru">гнить изнутри</div><div class="example">The pumpkins appear healthy outside but are damaged inside.</div></div>
+    <div class="card vocab" data-speech="keep something secret"><div class="word">keep something secret 🔊</div><div class="ru">держать что-либо в секрете</div><div class="example">Hopper keeps an important secret.</div></div>
+    <div class="card vocab" data-speech="feel left out"><div class="word">feel left out 🔊</div><div class="ru">чувствовать себя лишним</div><div class="example">A person feels left out when others exclude them.</div></div>
+    <div class="card vocab" data-speech="make fun of someone"><div class="word">make fun of someone 🔊</div><div class="ru">смеяться над кем-либо</div><div class="example">Kind friends should not make fun of each other.</div></div>
+    <div class="card vocab" data-speech="be worried about"><div class="word">be worried about 🔊</div><div class="ru">беспокоиться о</div><div class="example">Joyce is worried about Will.</div></div>
+    <div class="card vocab" data-speech="act strangely"><div class="word">act strangely 🔊</div><div class="ru">вести себя странно</div><div class="example">Will begins to act strangely after his vision.</div></div>
+    <div class="card vocab" data-speech="a warning sign"><div class="word">a warning sign 🔊</div><div class="ru">тревожный признак</div><div class="example">The dead plants may be a warning sign.</div></div>
+    <div class="card vocab" data-speech="be connected to"><div class="word">be connected to 🔊</div><div class="ru">быть связанным с</div><div class="example">The new events may be connected to the Upside Down.</div></div>
+    <div class="card vocab" data-speech="hide in a cabin"><div class="word">hide in a cabin 🔊</div><div class="ru">прятаться в хижине</div><div class="example">Someone is secretly living in a cabin.</div></div>
+    <div class="card vocab" data-speech="follow the rules"><div class="word">follow the rules 🔊</div><div class="ru">следовать правилам</div><div class="example">Hopper expects the hidden person to follow strict rules.</div></div>
+  </div>
+
+  <h3>Fast vocabulary check</h3>
+  <div class="question" data-answer="1"><b>Which expression means «побить рекорд»?</b><div class="options">
+    <button class="option">keep a secret</button><button class="option">break a record</button><button class="option">follow the rules</button>
+  </div><div class="feedback"></div></div>
+  <div class="question" data-answer="0"><b>Which expression means “to examine a suspicious event carefully”?</b><div class="options">
+    <button class="option">investigate a case</button><button class="option">feel left out</button><button class="option">make fun of someone</button>
+  </div><div class="feedback"></div></div>
+  <div class="question" data-answer="2"><b>The pumpkins look normal outside, but they ______.</b><div class="options">
+    <button class="option">break a record</button><button class="option">lose consciousness</button><button class="option">rot from the inside</button>
+  </div><div class="feedback"></div></div>
+</section>
+
+<section id="story">
+  <span class="badge">Stage 3</span><span class="time">10 minutes</span>
+  <h2>Episode story</h2>
+  <p class="small">Click underlined words for a Russian hint. The text is an original educational summary, not a transcript.</p>
+  <div class="story">
+    In October 1984, a group of young criminals escape from the police in Pittsburgh. One of them appears to create a powerful illusion. Her wrist carries the number 008, suggesting that Eleven was not the only child involved in secret experiments.
+    <br><br>
+    In Hawkins, Mike, Dustin, Lucas and Will spend time at the local arcade. They discover that a <span class="clickword" data-tip="таинственный игрок">mysterious player</span> called “MADMAX” has <span class="clickword" data-tip="побил рекорд">broken a record</span>. The boys become curious and want to identify the new champion.
+    <br><br>
+    Will suddenly experiences another frightening event. For a moment, the familiar town disappears and he sees a dark version of Hawkins beneath a red storm. A gigantic shadow creature appears in the sky. Will returns to normal, but he is deeply shaken. Joyce takes him to the laboratory, where a doctor questions him. The doctor suggests that these episodes may be temporary memories, yet Will is not convinced.
+    <br><br>
+    Meanwhile, Hopper is asked to <span class="clickword" data-tip="расследовать дело">investigate a case</span> involving damaged pumpkin fields. The plants are <span class="clickword" data-tip="гниют изнутри">rotting from the inside</span>, and the problem is spreading. Hopper initially treats it as an ordinary dispute, although the dead crops may be <span class="clickword" data-tip="тревожным признаком">a warning sign</span>.
+    <br><br>
+    At school, the boys finally meet Max, a confident new student who enjoys skateboarding and arcade games. Dustin and Lucas are immediately interested in her, while Mike remains distant. Max's older stepbrother Billy behaves aggressively and appears determined to control her.
+    <br><br>
+    Nancy still feels guilty about Barb. She and Steve visit Barb's parents, who still do not know the truth. The authorities continue to <span class="clickword" data-tip="держать произошедшее в секрете">keep the events secret</span>.
+    <br><br>
+    The final scene reveals another major secret: Eleven is alive. She is living in a hidden cabin with Hopper. He protects her, but she must remain indoors and <span class="clickword" data-tip="следовать правилам">follow strict rules</span>. Their relationship is caring but tense, because Eleven wants greater freedom.
+  </div>
+</section>
+
+<section id="quiz">
+  <span class="badge">Stage 4</span><span class="time">10 minutes</span>
+  <h2>Comprehension challenge</h2>
+  <div class="progress-wrap"><div class="progress" id="quizProgress"></div></div>
+  <div id="quizBox"></div>
+  <p id="scoreLine" class="feedback"></p>
+</section>
+
+<section id="grammar">
+  <span class="badge">Stage 5</span><span class="time">10 minutes</span>
+  <h2>Grammar focus: predictions and possibility</h2>
+  <div class="grid">
+    <div class="card"><div class="word">I think…</div><p>Use it for a personal prediction or opinion.</p><p><i>I think Will is still connected to the Upside Down.</i></p></div>
+    <div class="card"><div class="word">He / She / It may…</div><p>Use <b>may + base verb</b> for possibility.</p><p><i>Max may join the group.</i></p></div>
+    <div class="card"><div class="word">It is likely that…</div><p>Use it when something seems probable.</p><p><i>It is likely that the dead fields are connected.</i></p></div>
+    <div class="card"><div class="word">There is a possibility that…</div><p>Use it for a cautious, more formal prediction.</p><p><i>There is a possibility that Eleven will leave the cabin.</i></p></div>
+  </div>
+
+  <h3>Choose the best prediction</h3>
+  <div class="question" data-answer="0"><b>Max is talented and confident. ______ she will become important to the group.</b><div class="options">
+    <button class="option">It is likely that</button><button class="option">It likely</button><button class="option">She likely that</button>
+  </div><div class="feedback"></div></div>
+  <div class="question" data-answer="2"><b>Will ______ see the shadow creature again.</b><div class="options">
+    <button class="option">may sees</button><button class="option">is may see</button><button class="option">may see</button>
+  </div><div class="feedback"></div></div>
+  <div class="question" data-answer="1"><b>Which sentence is grammatically correct?</b><div class="options">
+    <button class="option">I think Hopper may investigates the fields.</button><button class="option">I think Hopper may investigate the fields.</button><button class="option">I think Hopper may to investigate the fields.</button>
+  </div><div class="feedback"></div></div>
+
+  <h3>Build three predictions</h3>
+  <p>Drag or tap the idea chips mentally, then write complete sentences.</p>
+  <div class="chips">
+    <span class="chip">Will + see the creature again</span>
+    <span class="chip">Max + become their friend</span>
+    <span class="chip">Eleven + leave the cabin</span>
+    <span class="chip">the rotten fields + spread</span>
+    <span class="chip">Billy + cause trouble</span>
+  </div>
+  <textarea class="fill" rows="6" placeholder="1. I think…&#10;2. He/She/It may…&#10;3. It is likely that…"></textarea>
+  <button onclick="toggleModel()">Show / hide model answers</button>
+  <div id="modelAnswers" class="hidden prompt" style="margin-top:12px">
+    I think Will will see the creature again.<br>
+    Max may become a member of the group.<br>
+    It is likely that the damage to the fields will spread.<br>
+    There is a possibility that Eleven will leave the cabin.<br>
+    Billy may cause serious trouble.
+  </div>
+</section>
+
+<section id="speaking">
+  <span class="badge">Stage 6</span><span class="time">10 minutes</span>
+  <h2>Speaking missions</h2>
+
+  <div class="speaking">
+    <h3>Mission A: The mystery analyst</h3>
+    <p>Choose one mystery and speak for 45 seconds.</p>
+    <p><b>Mysteries:</b> Will's visions, the rotten pumpkins, Max's identity, Eleven's cabin, the girl numbered 008.</p>
+    <p><b>Use at least three:</b> I think… / may… / It is likely that… / a warning sign / be connected to / keep something secret.</p>
+    <div class="timer" id="timer">00:45</div>
+    <button onclick="startTimer(45)">Start 45-second timer</button>
+  </div>
+
+  <div class="speaking" style="margin-top:16px">
+    <h3>Mission B: Agree or disagree</h3>
+    <p>Respond to each statement and explain your view.</p>
+    <ol>
+      <li>Hopper is right to keep Eleven inside the cabin.</li>
+      <li>Mike is unfriendly to Max.</li>
+      <li>The doctor is hiding something from Joyce and Will.</li>
+      <li>The dead pumpkins are more dangerous than they appear.</li>
+    </ol>
+    <p class="small">Useful language: I agree because… / I partly disagree because… / From my perspective… / The strongest evidence is…</p>
+  </div>
+</section>
+
+<section id="final">
+  <span class="badge">Final mission</span><span class="time">5 minutes</span>
+  <h2>Create the trailer for Episode 2</h2>
+  <p>Imagine you are producing a 30-second trailer. Complete the script orally.</p>
+  <div class="prompt">
+    Something is wrong in Hawkins.<br>
+    Will may _______________________________.<br>
+    It is likely that the rotten fields _______________________________.<br>
+    Eleven wants _______________________________, but Hopper _______________________________.<br>
+    Max may _______________________________.<br>
+    And there is a possibility that _______________________________.
+  </div>
+  <h3>Self-check</h3>
+  <label><input type="checkbox"> I used at least three prediction structures.</label><br>
+  <label><input type="checkbox"> I used at least four new collocations.</label><br>
+  <label><input type="checkbox"> I gave reasons for my predictions.</label><br>
+  <label><input type="checkbox"> I spoke for at least 30 seconds.</label>
+</section>
+</main>
+
+<footer>Stranger Things English Course • Season 2, Episode 1</footer>
+
+<script>
+document.querySelectorAll('.vocab').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const ru=card.querySelector('.ru');
+    ru.style.display=ru.style.display==='block'?'none':'block';
+    const speech=new SpeechSynthesisUtterance(card.dataset.speech);
+    speech.lang='en-US'; speech.rate=.86;
+    speechSynthesis.cancel(); speechSynthesis.speak(speech);
+  });
+});
+
+document.querySelectorAll('.clickword').forEach(w=>{
+  w.addEventListener('click',()=>alert(w.dataset.tip));
+});
+
+function bindStaticQuestions(){
+  document.querySelectorAll('.question[data-answer]').forEach(q=>{
+    const ans=Number(q.dataset.answer);
+    const opts=[...q.querySelectorAll('.option')];
+    const fb=q.querySelector('.feedback');
+    opts.forEach((btn,i)=>btn.addEventListener('click',()=>{
+      opts.forEach(o=>o.disabled=true);
+      btn.classList.add(i===ans?'correct':'wrong');
+      if(i!==ans) opts[ans].classList.add('correct');
+      fb.textContent=i===ans?'Correct. Hawkins survives another click.':'Not quite. Review the clue and try the next one.';
+    }));
+  });
+}
+bindStaticQuestions();
+
+const quiz=[
+ {q:"What unusual ability does the girl numbered 008 appear to have?",o:["She becomes invisible.","She creates illusions.","She controls machines."],a:1},
+ {q:"Why are the boys interested in MADMAX?",o:["MADMAX broke an arcade record.","MADMAX stole their bicycles.","MADMAX sent them a letter."],a:0},
+ {q:"What does Will see during his frightening vision?",o:["A laboratory explosion.","A normal storm.","A gigantic shadow creature."],a:2},
+ {q:"What problem does Hopper investigate?",o:["Missing arcade machines.","Rotting pumpkin fields.","A school fire."],a:1},
+ {q:"How does Mike initially behave towards Max?",o:["He is distant and suspicious.","He immediately invites her home.","He asks her to lead the group."],a:0},
+ {q:"What do Barb's parents still not know?",o:["Nancy has left Hawkins.","Steve works at the arcade.","The truth about Barb's death."],a:2},
+ {q:"Where is Eleven living?",o:["In a hidden cabin.","At Hawkins School.","In Pittsburgh."],a:0},
+ {q:"Why must Eleven follow strict rules?",o:["She is preparing for an exam.","Hopper wants to keep her safe and hidden.","She damaged the arcade."],a:1}
+];
+let answered=0,score=0;
+const box=document.getElementById('quizBox');
+quiz.forEach((item,idx)=>{
+  const div=document.createElement('div');div.className='question';
+  div.innerHTML=`<b>${idx+1}. ${item.q}</b><div class="options">${item.o.map((x,i)=>`<button class="option" data-i="${i}">${x}</button>`).join('')}</div><div class="feedback"></div>`;
+  box.appendChild(div);
+  const opts=[...div.querySelectorAll('.option')],fb=div.querySelector('.feedback');
+  opts.forEach(btn=>btn.onclick=()=>{
+    if(div.dataset.done)return;
+    div.dataset.done='1';answered++;
+    const i=Number(btn.dataset.i);
+    if(i===item.a){score++;btn.classList.add('correct');fb.textContent='Correct.'}
+    else{btn.classList.add('wrong');opts[item.a].classList.add('correct');fb.textContent='Incorrect. The correct answer is highlighted.'}
+    opts.forEach(o=>o.disabled=true);
+    document.getElementById('quizProgress').style.width=(answered/quiz.length*100)+'%';
+    document.getElementById('scoreLine').textContent=`Score: ${score}/${answered}`;
+  };
+});
+
+function toggleModel(){document.getElementById('modelAnswers').classList.toggle('hidden')}
+let interval;
+function startTimer(seconds){
+  clearInterval(interval);
+  let left=seconds;
+  const el=document.getElementById('timer');
+  const render=()=>{el.textContent='00:'+String(left).padStart(2,'0')};
+  render();
+  interval=setInterval(()=>{
+    left--;render();
+    if(left<=0){clearInterval(interval);el.textContent='TIME';speechSynthesis.speak(new SpeechSynthesisUtterance('Time is up'))}
+  },1000);
+}
+</script>
+</body>
+</html>
